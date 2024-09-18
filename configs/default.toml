@@ -1,6 +1,7 @@
 [fsgurl]
 url = 'https://www.formulastudent.de/fsg/'
 login_url = 'https://www.formulastudent.de/login'
+account_url = 'https://www.formulastudent.de/my-account/overview/'
 
 [debug]
 performance_logger = false

@@ -19,6 +19,7 @@ class FSConfigParser:
             self.fsg_login_url: str = self.__parse_fsg_credentials(
                 self.config.get_param("fsgurl", "login_url")
             )
+            self.fsg_account_url: str = self.config.get_param("fsgurl", "account_url")
 
             # [debug]
             self.debug: bool = self.config.get_param("debug", "performance_logger")
