@@ -24,8 +24,8 @@ class FSConfigParser:
             self.debug: bool = self.config.get_param("debug", "performance_logger")
 
             # [clickup]
-            self.target_server: str = self.config.get_param("clickup", "target_server")
-            self.clickup_token: str = self.__parse_clickup_api(self.target_server)
+            self.api_server: str = self.config.get_param("clickup", "api_server")
+            self.clickup_token: str = self.__parse_clickup_api(self.api_server)
 
         except KeyError as error:
             logger.error(
@@ -67,28 +67,53 @@ class FSConfigParser:
             logger.error("check environment variables, fsg_login_url not set")
             raise SystemExit(1)
 
-    def __parse_clickup_api(self, target_server: str) -> str:
+    def __parse_clickup_api(self, api_server: str) -> str:
         load_dotenv()
 
         clickup_api_token = os.environ.get("CLICKUPAPIKEY")
+        clickup_workspace_name = os.environ.get("CLICKUPWORKSPACENAME")
+        logger.info(clickup_workspace_name)
 
         if clickup_api_token == "" or clickup_api_token == None:
             logger.error("check environment variables, clickup_api_key in .env not set")
             raise SystemExit(1)
 
-        if target_server != "" and target_server != None:
+        if clickup_workspace_name == "" or clickup_workspace_name == None:
+            logger.error(
+                "check environment variables, clickup_workspace_name in .env not set"
+            )
+            raise SystemExit(1)
+
+        if api_server != "" and api_server != None:
             headers = {"Authorization": clickup_api_token}
-            response = requests.get(target_server, headers=headers)
+            response = requests.get(api_server, headers=headers)
 
             if response.status_code == 200:
                 logger.success("Successfully authenticated with ClickUp API.")
+                teams = response.json().get("teams", [])
+                if not teams:
+                    logger.error("No workspaces found.")
+                    raise SystemExit(1)
+                else:
+                    for team in teams:
+                        if team.get("name") == clickup_workspace_name:
+                            self.clickup_workspace_id = team.get("id")
+                            self.clickup_workspace_name = clickup_workspace_name
+                            logger.success(f"Found workspace: {clickup_workspace_name}")
+                            break
+                    else:
+                        logger.error(
+                            f"Workspace name '{clickup_workspace_name}' not found."
+                        )
+                        raise SystemExit(1)
                 return clickup_api_token
             else:
-                return {
-                    "error": f"Failed to authenticate: {response.status_code}, {response.text}"
-                }
+                logger.error(
+                    f"Failed to authenticate with ClickUp API: {response.status_code}, {response.text}"
+                )
+                raise SystemExit(1)
         else:
-            logger.error("check config variables, target_server not set")
+            logger.error("check config variables, api_server not set")
             raise SystemExit(1)
 
 
