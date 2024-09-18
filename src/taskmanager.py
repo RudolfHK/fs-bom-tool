@@ -1,8 +1,9 @@
-from client import ClickupClient
-from automator import FormAutomator
+from logger.fslogger import global_fs_logger as logger
+from clickup.client import ClickUpClient
+from fsg.automator import WebFormAutomator
 
 class TaskManager:
-    def __init__(self, clickup_client : ClickupClient, form_automator : FormAutomator):
+    def __init__(self, clickup_client : ClickUpClient, form_automator : WebFormAutomator):
         self.clickup_client = clickup_client
         self.form_automator = form_automator
     
