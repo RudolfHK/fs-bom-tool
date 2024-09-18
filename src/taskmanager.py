@@ -17,4 +17,18 @@ class TaskManager:
 
     def process_task(self, task):
         pass
-        # Logic to format the task data into the form input structure
+        # A format for the fsg website should include the following:
+        # FSG-ID    |  EXAMPLE:                                     |   CLICKUP response
+        # -----------------------------------------------------------------------------------------
+        # system    | 'BR;EN; ...',                                 |   'name': 'SP.12.00.00_ScrewCover'
+        # Assembly  | 'Brake Fluid',                                |
+        #           | If not in FSG Assembly List:                  |
+        #           |-> OTHER create with name + description        |
+        # Sub-Assembly if given                                     |
+        #           | If Sub-Assembly not in FSG Sub Assembly Lists |
+        #           |-> NEW create with name                        |
+        # Part Name | 'Fluid xyz',                                  |   'name': 'SP.12.00.00_ScrewCover'
+        # Make/Buy  | 'Make' or 'Buy', radio button                 |
+        # Quantity  | 1,                                            |
+        # Custom ID | '1234',                                       |
+        #           | Check if ID already exists                    |

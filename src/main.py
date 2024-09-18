@@ -11,15 +11,13 @@ def main():
     clickup_client = ClickUpClient(
         FSCONFIG.clickup_token, FSCONFIG.api_server, FSCONFIG.clickup_workspace_id
     )
-    logger.info(
-        clickup_client.filter_system_lists(
-            clickup_client.build_get_request(
-                f"team/{FSCONFIG.clickup_workspace_id}/list"
-            ),
-        )
+    system_lists = clickup_client.filter_system_lists(
+        clickup_client.build_get_request(f"team/{FSCONFIG.clickup_workspace_id}/list"),
     )
+    for list_id in system_lists:
+        tasks = clickup_client.build_get_request(f"list/{list_id.get("id")}/task")
+        logger.info(tasks)
 
-    logger.info(clickup_client.build_get_request(f"list/901500488261/task"))
 
     # Initialize WebFormAutomator
     # web_form_automator = WebFormAutomator()
@@ -27,7 +25,7 @@ def main():
     # Initialize TaskManager
     # task_manager = TaskManager(clickup_client, web_form_automator)
     # Extract and submit tasks
-    # task_manager.extract_and_submit_tasks(workspace_id)
+    
     logger.info("ClickUp to FSG automation completed successfully.")
 
 

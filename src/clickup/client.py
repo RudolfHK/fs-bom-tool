@@ -31,17 +31,17 @@ class ClickUpClient:
             )
             response.raise_for_status()
 
-    def filter_system_lists(self, list_respone: dict, trim: bool = True) -> list:
+    def filter_system_lists(self, list_response: dict, trim: bool = True) -> list[dict]:
         """Filters out FSG BOM Tool system lists from the workspace lists. This also ignore archived lists.
 
         Args:
-            list_respone (dict): jsno response from the ClickUp API.
+            list_response (dict): jsno response from the ClickUp API.
             trim (bool, optional): trims data to essentials (id,name,task_count,folder{id,name},space{id,name}) . Defaults to False.
 
         Returns:
             list: list of system lists.
             without trim: {'id': '1', 'name': 'SU.24_Suspension', 'orderindex': 6, 'content': '', 'status': None, 'priority': None, 'assignee': None, 'due_date': None, 'start_date': None, 'folder': {'id': '3', 'name': 'Baugruppen', 'hidden': False, 'access': True}, 'space': {'id': '5', 'name': 'Fahrwerk', 'access': True}, 'archived': False, 'override_statuses': True, 'permission_level': 'create'},
-            with trim: {'id': '1', 'name': 'SU.24_Suspension', 'folder': {'id': '3', 'name': 'Baugruppen'}, 'space': {'id': '5', 'name': 'Fahrwerk'}}
+            with trim: {'id': '1', 'name': 'SU.24_Suspension'}
         """
         systems = [
             "BR",
@@ -53,7 +53,7 @@ class ClickUpClient:
             "SU",
             "WT",
         ]
-        lists = list_respone.get("lists", [])
+        lists = list_response.get("lists", [])
         filtered_list = [
             l for l in lists if l.get("name")[:2] in systems and not l.get("archived")
         ]
@@ -68,20 +68,10 @@ class ClickUpClient:
                     ]
                     if k in item
                 }
-                if "folder" in item:
-                    trimmed_item["folder"] = {
-                        "id": item["folder"].get("id"),
-                        "name": item["folder"].get("name"),
-                    }
-                if "space" in item:
-                    trimmed_item["space"] = {
-                        "id": item["space"].get("id"),
-                        "name": item["space"].get("name"),
-                    }
                 trimmed_response.append(trimmed_item)
             return trimmed_response
         return filtered_list
 
-    def get_task_details(self, task_id):
+    def filter_system_tasks(self, list_response: dict, trim: bool = True) -> list[dict]:
         pass
         # Logic to fetch task details using task_id
