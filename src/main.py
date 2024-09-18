@@ -8,8 +8,19 @@ from config_loader.fsconfig import FSCONFIG
 def main():
     logger.info("Starting the ClickUp to FSG automation tool.")
 
-    # Initialize ClickUp client
-    # clickup_client = ClickUpClient()
+    clickup_client = ClickUpClient(
+        FSCONFIG.clickup_token, FSCONFIG.api_server, FSCONFIG.clickup_workspace_id
+    )
+    logger.info(
+        clickup_client.filter_system_lists(
+            clickup_client.build_get_request(
+                f"team/{FSCONFIG.clickup_workspace_id}/list"
+            ),
+        )
+    )
+
+    logger.info(clickup_client.build_get_request(f"list/901500488261/task"))
+
     # Initialize WebFormAutomator
     # web_form_automator = WebFormAutomator()
 

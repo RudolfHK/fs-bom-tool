@@ -6,4 +6,4 @@ login_url = 'https://www.formulastudent.de/login'
 performance_logger = false
 
 [clickup]
-target_server = 'https://api.clickup.com/api/v2/team'
+api_server = 'https://api.clickup.com/api/v2'

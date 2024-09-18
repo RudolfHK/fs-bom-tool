@@ -86,7 +86,7 @@ class FSConfigParser:
 
         if api_server != "" and api_server != None:
             headers = {"Authorization": clickup_api_token}
-            response = requests.get(api_server, headers=headers)
+            response = requests.get(f"{api_server}/team", headers=headers)
 
             if response.status_code == 200:
                 logger.success("Successfully authenticated with ClickUp API.")
