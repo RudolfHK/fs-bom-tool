@@ -20,6 +20,7 @@
         "pandas",
         "tqdm",
         "python-dotenv",
+        "requests",
     ]
 
 [project.optional-dependencies]

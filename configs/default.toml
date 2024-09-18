@@ -1,0 +1,9 @@
+[fsgurl]
+url = 'https://www.formulastudent.de/fsg/'
+login_url = 'https://www.formulastudent.de/login'
+
+[debug]
+performance_logger = false
+
+[clickup]
+target_server = 'https://api.clickup.com/api/v2/team'
