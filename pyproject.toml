@@ -1,0 +1,29 @@
+[build-system]
+    requires = ["setuptools", "setuptools-scm"]
+    build-backend = "setuptools.build_meta"
+
+[project]
+    name = "fs-clickup-bom-tool"
+    version = "0.1"
+    description = "Tool to create a Bill of Material from ClickUp tasks and tables"
+    authors = [
+        { name = "Rudolf Hoffmann", email = "Rudolf.Hoffmann@student.htw-berlin.de" },
+    ]
+    readme = "README.md"
+    requires-python = ">=3.11.3"
+
+    dependencies = [
+        "toml",
+        "numpy",
+        "loguru",
+        "pathlib",
+        "pandas",
+        "tqdm",
+        "python-dotenv",
+    ]
+
+[project.optional-dependencies]
+    dev = ["black","mypy","pyinstrument"]
+
+[tool.black]
+    line-length = 88
