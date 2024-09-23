@@ -25,8 +25,7 @@ def main():
         FSCONFIG.fsg_user,
         FSCONFIG.fsg_passwd,
         FSCONFIG.fsg_account_url,
-        "greenBEAR",
-        # FSCONFIG.fsg_team_name,
+        FSCONFIG.fsg_team_name,
     )
     web_form_automator.login_fsg_website()
     web_form_automator.navigate_to_form()
@@ -44,6 +43,7 @@ def main():
         comments="Replace worn parts",
         quantity=4,
     )
+    logger.info(form_data)
 
     # Initialize TaskManager
     # task_manager = TaskManager(clickup_client, web_form_automator)

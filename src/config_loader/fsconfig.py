@@ -45,6 +45,7 @@ class FSConfigParser:
 
         fsg_user = os.environ.get("FSGUSER")
         fsg_passwd = os.environ.get("FSGPASSWD")
+        self.fsg_team_name = os.environ.get("FSGTEAMNAME")
 
         if fsg_user == "" or fsg_user == None:
             logger.error("check environment variables, FSGUSER in .env not set")
