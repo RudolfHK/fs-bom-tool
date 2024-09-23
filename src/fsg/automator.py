@@ -4,8 +4,6 @@ from fsg.dataformat import FormData
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
@@ -217,3 +215,11 @@ class WebFormAutomator:
         # Find and click the 'Create' button
         create_button = self.driver.find_element(By.CSS_SELECTOR, ".btn.btn")
         create_button.click()
+
+    def edit_existing_entry(self, entry_data: FormData) -> None:
+        """Edit an existing entry in the form.
+
+        Args:
+            entry_data (FormData): The data to be entered into the form.
+        """
+        raise NotImplementedError

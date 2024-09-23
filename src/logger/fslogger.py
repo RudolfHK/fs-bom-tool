@@ -66,4 +66,4 @@ global_fs_logger.add(
 
 
 # Init complete Start Message
-logger.info("--------------START--------------")
+logger.info("--------------Starting the FSG BOM Automation --------------")
