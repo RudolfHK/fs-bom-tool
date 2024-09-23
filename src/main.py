@@ -3,6 +3,7 @@ from clickup.client import ClickUpClient
 from fsg.automator import WebFormAutomator
 from taskmanager import TaskManager
 from config_loader.fsconfig import FSCONFIG
+from fsg.dataformat import FormData
 
 
 def main():
@@ -29,6 +30,21 @@ def main():
     )
     web_form_automator.login_fsg_website()
     web_form_automator.navigate_to_form()
+
+    # Example of using the class
+    form_data = FormData(
+        system="BR",
+        assembly="Brake Discs",
+        assembly_name="Front Brake System",
+        assembly_comment="Front assembly",
+        sub_assembly="- none -",
+        sub_assembly_name="",
+        part="Brake Pad",
+        makebuy="b",
+        comments="Replace worn parts",
+        quantity=4,
+    )
+
     # Initialize TaskManager
     # task_manager = TaskManager(clickup_client, web_form_automator)
     # Extract and submit tasks
