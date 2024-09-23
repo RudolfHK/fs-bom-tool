@@ -3,6 +3,24 @@ import requests
 
 
 class ClickUpClient:
+    """A client for interacting with the ClickUp API.
+    This class provides methods to build and send GET requests to the ClickUp API,
+    as well as to filter and process responses from the API. It is designed to work
+    with a specific workspace and requires an API token for authentication.
+
+    Attributes:
+        api_token (str): The API token used for authenticating requests.
+        api_server (str): The base URL of the ClickUp API server.
+        workspace_id (str): The ID of the workspace to interact with.
+    Methods:
+        build_get_request(endpoint: str, params: dict = None) -> dict:
+            Builds and sends a GET request to the ClickUp API.
+        filter_system_lists(list_response: dict, trim: bool = True) -> list[dict]:
+            Filters out system lists from the workspace lists, optionally trimming the data.
+        filter_system_tasks(list_response: dict, trim: bool = True) -> list[dict]:
+            Placeholder method for filtering system tasks.
+    """
+
     def __init__(self, api_token: str, api_server: str, workspace_id: str):
         self.api_token = api_token
         self.api_server = api_server

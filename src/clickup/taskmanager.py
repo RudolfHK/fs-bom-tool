@@ -5,16 +5,25 @@ from fsg.dataformat import FormData
 
 
 class TaskManager:
+    """Manages tasks by importing them from ClickUp and submitting them to the FSG website.
+
+    Attributes:
+        clickup_client (ClickUpClient): The client used to interact with the ClickUp API.
+        web_form_automator (WebFormAutomator): The automator used to interact with the FSG website.
+
+    Methods:
+        import_entries() -> dict:
+            Starts the task import process by extracting tasks from ClickUp and submitting them to the FSG website.
+        convert_data(json_output: dict) -> list[FormData]:
+            Converts the JSON output from ClickUp into a list of FormData objects.
+        submit_to_fsg(form_data_list: list[FormData]):
+            Submits the provided form data to the FSG website.
+                form_data_list (list[FormData]): A list of FormData objects to be submitted.
+    """
+
     def __init__(
         self, clickup_client: ClickUpClient, web_form_automator: WebFormAutomator
     ):
-        """Initializes the TaskManager with the ClickUpClient and WebFormAutomator instances.
-        The Taskmanager is the Main execution class that will extract tasks from ClickUp, convert the json output into the FormData Class and then submit them to the FSG website.
-
-        Args:
-            clickup_client (ClickUpClient): _description_
-            form_automator (WebFormAutomator): _description_
-        """
         self.clickup_client: ClickUpClient = clickup_client
         self.web_form_automator: WebFormAutomator = web_form_automator
 

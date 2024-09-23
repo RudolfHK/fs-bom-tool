@@ -10,6 +10,35 @@ from selenium.webdriver.support.ui import Select
 
 
 class WebFormAutomator:
+    """WebFormAutomator is a class designed to automate interactions with a web form on the FSG website.
+    It uses Selenium WebDriver to perform tasks such as logging in, navigating to specific pages,
+    and filling out forms with provided data.
+        driver (webdriver.Chrome): The Chrome WebDriver instance used for browser automation.
+
+    Attributes:
+        driver (webdriver.Chrome): The Chrome WebDriver instance.
+        login_url (str): The URL for the login page.
+        username (str): The username for login.
+        password (str): The password for login.
+        account_url (str): The URL for the account page.
+        fsg_team_name (str): The name of the FSG team.
+
+    Methods:
+        __init__(login_url: str, username: str, password: str, account_url: str, fsg_team_name: str):
+            Initializes the WebFormAutomator with the necessary credentials and URLs.
+        login_fsg_website():
+            Logs into the FSG website using the provided credentials.
+        navigate_to_form():
+            Navigates to the form page on the FSG website.
+        create_new_entry(entry_data: FormData) -> None:
+            Completes the workflow for checking if a new entry is already present and then creates a new entry in the form.
+        check_ids(table_id: int, id_to_check: int) -> bool:
+            Checks if the ID is already present in the table.
+        fill_and_submit_form(entry_data: FormData) -> None:
+            Fills the form with the provided data and submits it.
+        edit_existing_entry(entry_data: FormData) -> None:
+            Edits an existing entry in the form. (Not yet implemented)"""
+
     def __init__(
         self,
         login_url: str,
@@ -18,22 +47,6 @@ class WebFormAutomator:
         account_url: str,
         fsg_team_name: str,
     ):
-        """
-        Initializes the Automator class with the necessary credentials and URLs.
-        Args:
-            login_url (str): The URL for the login page.
-            username (str): The username for login.
-            password (str): The password for login.
-            account_url (str): The URL for the account page.
-            fsg_team_name (str): The name of the FSG team.
-        Attributes:
-            driver (webdriver.Chrome): The Chrome WebDriver instance.
-            login_url (str): The URL for the login page.
-            username (str): The username for login.
-            password (str): The password for login.
-            account_url (str): The URL for the account page.
-            fsg_team_name (str): The name of the FSG team.
-        """
         self.driver = webdriver.Chrome()
         self.login_url = login_url
         self.username = username

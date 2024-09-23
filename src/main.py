@@ -27,7 +27,7 @@ def main():
     # json_response = task_manager.import_entries()
     # form_data_list = task_manager.convert_data(json_response)
     # task_manager.submit_to_fsg(form_data_list)
-    logger.success("Automation successfully completed.")
+    logger.success("Automation successfull")
 
 
 if __name__ == "__main__":
