@@ -33,17 +33,17 @@ def main():
     # Example of using the class
     form_data = FormData(
         system="BR",
-        assembly="Brake Discs",
-        assembly_name="Front Brake System",
-        assembly_comment="Front assembly",
+        assembly="Brake Lines",
+        assembly_name="",
+        assembly_comment="",
         sub_assembly="- none -",
         sub_assembly_name="",
-        part="Brake Pad",
+        part="Testpart Tool",
         makebuy="b",
         comments="Replace worn parts",
         quantity=4,
     )
-    logger.info(form_data)
+    web_form_automator.create_new_entry(form_data)
 
     # Initialize TaskManager
     # task_manager = TaskManager(clickup_client, web_form_automator)
