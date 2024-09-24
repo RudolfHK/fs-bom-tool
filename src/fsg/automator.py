@@ -1,5 +1,5 @@
 from logger.fslogger import global_fs_logger as logger
-from fsg.dataformat import FormData
+from fsg.part_dataformat import PartFormData
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -30,13 +30,13 @@ class WebFormAutomator:
             Logs into the FSG website using the provided credentials.
         navigate_to_form():
             Navigates to the form page on the FSG website.
-        create_new_entry(entry_data: FormData) -> None:
+        create_new_entry(entry_data: PartFormData) -> None:
             Completes the workflow for checking if a new entry is already present and then creates a new entry in the form.
         check_ids(table_id: int, id_to_check: int) -> bool:
             Checks if the ID is already present in the table.
-        fill_and_submit_form(entry_data: FormData) -> None:
+        fill_and_submit_form(entry_data: PartFormData) -> None:
             Fills the form with the provided data and submits it.
-        edit_existing_entry(entry_data: FormData) -> None:
+        edit_existing_entry(entry_data: PartFormData) -> None:
             Edits an existing entry in the form. (Not yet implemented)"""
 
     def __init__(
@@ -93,11 +93,11 @@ class WebFormAutomator:
             logger.error(f"Error navigating to form: {e}")
             self.driver.quit()
 
-    def create_new_entry(self, entry_data: FormData) -> None:
+    def create_new_entry(self, entry_data: PartFormData) -> None:
         """Complete workflow for checking if the new entry is already present and then creating a new entry in the form.
 
         Args:
-            entry_data (FormData): _description_
+            entry_data (PartFormData): _description_
         """
         # Check IDs sometimes throws Error during table check: Message: stale element reference:
         # if self.check_ids("bom-table", entry_data.custom_id):
@@ -144,11 +144,11 @@ class WebFormAutomator:
             logger.error(f"Error during table check: {e}")
             self.driver.quit()
 
-    def fill_and_submit_form(self, entry_data: FormData) -> None:
+    def fill_and_submit_form(self, entry_data: PartFormData) -> None:
         """Fills the form with the provided data.
 
         Args:
-            entry_data (FormData): The data to be entered into the form.
+            entry_data (PartFormData): The data to be entered into the form.
         """
         # Fill 'system' select dropdown
         system_select = Select(self.driver.find_element(By.ID, "DTE_Field_system"))
@@ -159,23 +159,31 @@ class WebFormAutomator:
             EC.presence_of_element_located((By.ID, "DTE_Field_assembly"))
         )
         assembly_select = Select(self.driver.find_element(By.ID, "DTE_Field_assembly"))
-        assembly_select.select_by_value(entry_data.assembly)
 
-        # Fill optional 'assembly_name' if it exists
-        if entry_data.assembly_name != "":
-            assembly_name_input = self.driver.find_element(
-                By.ID, "DTE_Field_assembly_name"
+        # Check if the entry_data.assembly is in the assembly_select options
+        if entry_data.assembly in [option.text for option in assembly_select.options]:
+            assembly_select.select_by_value(entry_data.assembly)
+        else:
+            logger.warning(
+                f"Assembly '{entry_data.assembly}' not found in options. Creating new Assembly"
             )
-            assembly_name_input.clear()
-            assembly_name_input.send_keys(entry_data.assembly_name)
+            assembly_select.select_by_value("Other")
 
-        # Fill optional 'assembly_comment' if it exists
-        if entry_data.assembly_comment != "":
-            assembly_comment_input = self.driver.find_element(
-                By.ID, "DTE_Field_assembly_comment"
-            )
-            assembly_comment_input.clear()
-            assembly_comment_input.send_keys(entry_data.assembly_comment)
+            # Fill optional 'assembly_name' if it exists
+            if entry_data.assembly_name != "" and entry_data.assembly_name != None:
+                assembly_name_input = self.driver.find_element(
+                    By.ID, "DTE_Field_assembly_name"
+                )
+                assembly_name_input.clear()
+                assembly_name_input.send_keys(entry_data.assembly_name)
+
+            # Fill optional 'assembly_comment' if it exists
+            if entry_data.assembly_comment != "":
+                assembly_comment_input = self.driver.find_element(
+                    By.ID, "DTE_Field_assembly_comment"
+                )
+                assembly_comment_input.clear()
+                assembly_comment_input.send_keys(entry_data.assembly_comment)
 
         # Fill 'sub_assembly' select dropdown, "- none -" is default
         if entry_data.sub_assembly != "- none -" and entry_data.sub_assembly != "":
@@ -187,13 +195,18 @@ class WebFormAutomator:
             )
             sub_assembly_select.select_by_value(entry_data.sub_assembly)
 
-        # Fill optional 'sub_assembly_name' if it exists
-        if entry_data.sub_assembly_name != "":
-            sub_assembly_name_input = self.driver.find_element(
-                By.ID, "DTE_Field_sub_assembly_name"
-            )
-            sub_assembly_name_input.clear()
-            sub_assembly_name_input.send_keys(entry_data.sub_assembly_name)
+            # Fill optional 'sub_assembly_name' if it exists
+            if entry_data.sub_assembly_name != "":
+                WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located(
+                        (By.ID, "DTE_Field_sub_assembly_name")
+                    )
+                )
+                sub_assembly_name_input = self.driver.find_element(
+                    By.ID, "DTE_Field_sub_assembly_name"
+                )
+                sub_assembly_name_input.clear()
+                sub_assembly_name_input.send_keys(entry_data.sub_assembly_name)
 
         # Fill 'part' text input
         part_input = self.driver.find_element(By.ID, "DTE_Field_part")
@@ -217,22 +230,22 @@ class WebFormAutomator:
         quantity_input.clear()
         quantity_input.send_keys(entry_data.quantity)
 
-        # Fill 'sub_costs' if needed (if not disabled)
-        if not self.driver.find_element(By.ID, "DTE_Field_sub_costs").get_attribute(
-            "disabled"
-        ):
-            sub_costs_input = self.driver.find_element(By.ID, "DTE_Field_sub_costs")
-            sub_costs_input.clear()
-            sub_costs_input.send_keys(entry_data.sub_costs)
+        # # Fill 'sub_costs' if needed (if not disabled)
+        # if not self.driver.find_element(By.ID, "DTE_Field_sub_costs").get_attribute(
+        #     "disabled"
+        # ):
+        #     sub_costs_input = self.driver.find_element(By.ID, "DTE_Field_sub_costs")
+        #     sub_costs_input.clear()
+        #     sub_costs_input.send_keys(entry_data.sub_costs)
 
         # Find and click the 'Create' button
         create_button = self.driver.find_element(By.CSS_SELECTOR, ".btn.btn")
         create_button.click()
 
-    def edit_existing_entry(self, entry_data: FormData) -> None:
+    def edit_existing_entry(self, entry_data: PartFormData) -> None:
         """Edit an existing entry in the form.
 
         Args:
-            entry_data (FormData): The data to be entered into the form.
+            entry_data (PartFormData): The data to be entered into the form.
         """
         raise NotImplementedError

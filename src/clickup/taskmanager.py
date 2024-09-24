@@ -1,7 +1,7 @@
 from logger.fslogger import global_fs_logger as logger
 from clickup.client import ClickUpClient
 from fsg.automator import WebFormAutomator
-from fsg.dataformat import FormData
+from fsg.part_dataformat import PartFormData
 
 
 class TaskManager:
@@ -14,11 +14,11 @@ class TaskManager:
     Methods:
         import_entries() -> dict:
             Starts the task import process by extracting tasks from ClickUp and submitting them to the FSG website.
-        convert_data(json_output: dict) -> list[FormData]:
-            Converts the JSON output from ClickUp into a list of FormData objects.
-        submit_to_fsg(form_data_list: list[FormData]):
+        convert_data(json_output: dict) -> list[PartFormData]:
+            Converts the JSON output from ClickUp into a list of PartFormData objects.
+        submit_to_fsg(form_data_list: list[PartFormData]):
             Submits the provided form data to the FSG website.
-                form_data_list (list[FormData]): A list of FormData objects to be submitted.
+                form_data_list (list[PartFormData]): A list of PartFormData objects to be submitted.
     """
 
     def __init__(
@@ -36,20 +36,20 @@ class TaskManager:
         #     tasks = self.clickup_client.build_get_request(f"list/{list_id.get("id")}/task")
         #     logger.info(tasks)
 
-    def convert_data(self, json_output: dict) -> list[FormData]:
+    def convert_data(self, json_output: dict) -> list[PartFormData]:
         pass
 
-    def submit_to_fsg(self, form_data_list: list[FormData]):
+    def submit_to_fsg(self, form_data_list: list[PartFormData]):
         """Submits the provided form data to the FSG website.
 
         Args:
-            form_data_list (list[FormData]): _description_
+            form_data_list (list[PartFormData]): _description_
         """
         self.web_form_automator.login_fsg_website()
         self.web_form_automator.navigate_to_form()
 
         # Example of using the the Form Data Class
-        # form_data = FormData(
+        # form_data = PartFormData(
         #     system="BR",
         #     assembly="Brake Lines",
         #     assembly_name="",

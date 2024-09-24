@@ -3,7 +3,7 @@ from clickup.client import ClickUpClient
 from fsg.automator import WebFormAutomator
 from clickup.taskmanager import TaskManager
 from config_loader.fsconfig import FSCONFIG
-from fsg.dataformat import FormData
+from fsg.part_dataformat import PartFormData
 
 
 def main():
