@@ -74,7 +74,6 @@ class FSConfigParser:
 
         clickup_api_token = os.environ.get("CLICKUPAPIKEY")
         clickup_workspace_name = os.environ.get("CLICKUPWORKSPACENAME")
-        logger.info(clickup_workspace_name)
 
         if clickup_api_token == "" or clickup_api_token == None:
             logger.error("check environment variables, clickup_api_key in .env not set")

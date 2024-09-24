@@ -47,20 +47,9 @@ class TaskManager:
         """
         self.web_form_automator.login_fsg_website()
         self.web_form_automator.navigate_to_form()
-
-        # Example of using the the Form Data Class
-        # form_data = PartFormData(
-        #     system="BR",
-        #     assembly="Brake Lines",
-        #     assembly_name="",
-        #     assembly_comment="",
-        #     sub_assembly="- none -",
-        #     sub_assembly_name="",
-        #     part="Testpart Tool",
-        #     makebuy="b",
-        #     comments="Replace worn parts",
-        #     quantity=4,
-        # )
+        self.web_form_automator.existing_ids = (
+            self.web_form_automator.get_existing_ids()
+        )
 
         for form_data in form_data_list:
-            self.web_form_automator.create_new_entry(form_data)
+            self.web_form_automator.create_new_part_entry(form_data)
