@@ -17,16 +17,16 @@ class PartFormData:
         Initializes an instance of the class with the provided parameters.
 
         Parameters:
-            system (str, optional): The system identifier, e.g., 'BR', 'EL', 'EN', 'FR', 'SU', 'ST', 'WT', 'MS',.
-            assembly (str, optional): The assembly name of already existing Assemblies, e.g., 'Brake Discs', 'Brake Fluid', etc.
-            assembly_name (str, optional): Optional field for the assembly name when the Assembly is not a default Assembly in the FSG Tool. F. ex. 'Other: Front Brake', 'Other: Assembly' .
+            system (str): The system identifier, e.g., 'BR', 'EL', 'EN', 'FR', 'SU', 'ST', 'WT', 'MS',.
+            assembly (str): The assembly name of already existing Assemblies, e.g., 'Brake Discs', 'Brake Fluid', etc. . If the Assembly is not a default Assembly in the FSG Tool, the assembly field should be set to 'Other'.
+            assembly_name (str, optional): Optional field for the assembly name when the Assembly is not a default Assembly in the FSG Tool. F. ex. 'Other: Front Brake', 'Other: Assembly'.
             assembly_comment (str, optional): Optional comment for a non default assembly.
-            sub_assembly (str, optional): Optional sub-assembly selection. Defaults to '- none -'
-            sub_assembly_name (str, optional): Optional sub-assembly name. Defaults to None
-            part (str, optional): Text input for the part.
-            makebuy (str, optional): 'm' for make, 'b' for buy (radio button).
+            sub_assembly (str, optional): Optional sub-assembly selection. Defaults to '- none -'. If it is a new sub-assembly, the sub_assembly field should be set to '- new -'.
+            sub_assembly_name (str, optional): Optional field for the sub-assembly name when the sub assembly is not found int the existing one . Defaults to None
+            part (str): Text input for the part.
+            makebuy (str): 'm' for make, 'b' for buy (radio button).
             comments (str, optional): Optional comments field.
-            quantity (int, optional): Number of parts to enter.
+            quantity (int): Number of parts to enter.
             custom_id (str, optional): Optional custom ID field (maxlength=15).
         """
         self.system: str = system
