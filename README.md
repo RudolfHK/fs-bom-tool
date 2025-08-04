@@ -1,11 +1,16 @@
-# fs-clickup-bom-tool
+# Update 
+Currently unfinished, i will shift the focus from clickup to excel. Goal is to have something finished by the end of 2025.
+Working on dev branch.
 
-This tool is designed for Formula Student Teams that use ClickUp as their project management tool. It allows users to automatically import their vehicle modules and parts into the FSG BOM Tool.
+
+# fs-bom-tool
+
+This tool is designed for Formula Student Teams that use Excel fpr their internal bom. When finished it should enable users to automatically import their vehicle modules and parts into the FSG BOM Tool.
 
 ## Features
 
-- **Automated Import**: Seamlessly import vehicle modules and parts from ClickUp.
-- **User-Friendly Interface**: Easy to use with a clean and intuitive interface.
+- **Automated Import**: Seamlessly import vehicle modules and parts from Excel.
+- **CLI Tool**: Easy to set up and use with commands 
 - **Efficient Management**: Streamline your BOM management process.
 
 ## Installation
@@ -26,9 +31,8 @@ This tool is designed for Formula Student Teams that use ClickUp as their projec
 ## Usage
 1. Create .env file in head dir
 
-2. write your Clickup API KEY and FSG BOM tool credentials in the .env file like this
+2. write your FSG BOM tool credentials in the .env file like this
     ```sh
-    CLICKUPAPIKEY = xxxxxxxxx
     FSGUSER = name
     FSGPASSWD = password
     ```
@@ -38,11 +42,7 @@ This tool is designed for Formula Student Teams that use ClickUp as their projec
     python fs-clickup-bom-tool
     ```
 
-4. Follow the on-screen instructions to import your data from ClickUp.
-
-## Contributing
-
-We welcome contributions! Please read our [contributing guidelines](CONTRIBUTING.md) for more details.
+4. Use help for commands (Work in progress).
 
 ## License
 
@@ -50,5 +50,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-For any questions or suggestions, please open an issue or contact us.
+For any questions or suggestions, please open an issue or contact me by email: [EMAIL](mailto:s0583210@htw-berlin.de).
 
